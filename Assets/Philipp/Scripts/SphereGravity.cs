@@ -15,9 +15,24 @@ public class SphereGravity : MonoBehaviour {
 	// Update is called once per frame
 	public void Update ()
 	{
-		Vector3 gravity = worldSphere.transform.position - this.transform.position; 
-		gravity.Normalize();
-		gravity *= 1;
-		this.rigidbody.AddForce(gravity);
+		bool state = false;
+		if(this.gameObject.name == "Player1")
+		{
+			Player1_Collisions status = this.gameObject.GetComponent<Player1_Collisions>();
+			state = status.fly_away;
+		}
+
+		if(this.gameObject.name == "Player2")
+		{
+			Player2_Collisions status = this.gameObject.GetComponent<Player2_Collisions>();
+			state = status.fly_away;
+		}
+		if(!state)
+		{
+			Vector3 gravity = worldSphere.transform.position - this.transform.position; 
+			gravity.Normalize();
+			gravity *= 1;
+			this.rigidbody.AddForce(gravity);
+		}
 	}
 }

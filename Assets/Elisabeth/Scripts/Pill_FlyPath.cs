@@ -9,25 +9,45 @@ public class Pill_FlyPath : MonoBehaviour {
 	public GameObject target;
 	private bool followed = false;
 	private int point_index = 0;
-	public float velocity = 0.4f;
+	private float velocity = 0.1f;
 	private float threshold = 0.1f;
 	// Use this for initialization
 	void Start () {
 
-	
+		Transform particles = this.transform.GetChild (0);
+		particles.gameObject.SetActive (false);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if(followed)
 		{
-			Vector3 vec = (curve_points[point_index] - curve_points[point_index - 1]).normalized;
-			this.transform.position = this.transform.position + Time.deltaTime * vec;
-			if((this.transform.position - curve_points[point_index]).magnitude < threshold)
-			{
-				if(point_index < (curve_points.Count - 1))
-				   point_index++;
 
+			if(point_index == curve_points.Count - 1)
+			{
+				Vector3 vec = (target.transform.position - this.transform.position).normalized;
+				this.transform.position = this.transform.position + Time.deltaTime * vec * velocity;
+				Transform particles = this.transform.GetChild (0);
+				particles.LookAt (target.transform.position);
+
+			}
+			else
+			{
+				Vector3 vec = (curve_points[point_index] - curve_points[point_index - 1]).normalized;
+				this.transform.position = this.transform.position + Time.deltaTime * vec * velocity;
+			
+				Transform particles = this.transform.GetChild (0);
+				particles.LookAt (curve_points[point_index - 1]);
+
+				if((this.transform.position - curve_points[point_index]).magnitude < threshold)
+				{
+					if(point_index < (curve_points.Count))
+					{
+					   point_index++;
+						Debug.Log (point_index);
+					}
+
+				}
 			}
 		}
 	
@@ -41,11 +61,11 @@ public class Pill_FlyPath : MonoBehaviour {
 		point_index = 1;
 
 		Debug.Log ("Particles");
-		GameObject.Instantiate ( Resources.Load ("Pill_Particles") as GameObject);
-		GameObject particles = GameObject.Find ("Pill_Particles(Clone)");
-		particles.name = "Pill_Particles";
-		particles.transform.position = this.transform.position;
-		particles.transform.parent = this.gameObject.transform;
+		Transform particles = this.transform.GetChild (0);
+		particles.gameObject.SetActive (true);
+	
+		MeshRenderer m = this.GetComponent<MeshRenderer>();
+		m.enabled = false;
 
 
 		Vector3 vec = (curve_points[point_index] - this.gameObject.transform.position).normalized;
@@ -54,114 +74,8 @@ public class Pill_FlyPath : MonoBehaviour {
 
 
 
-
-		//this.gameObject.AddComponent<ParticleSystem>();
 	}
 
-	void OnTriggerEnter(Collider col)
-	{
-		if(col.gameObject == this.target)
-		{
-			Debug.Log ("Destroy");
-			if((col.gameObject.name == "Player1") || (col.gameObject.name == "Player2"))
-			{
-				GameObject obj = col.gameObject;
-
-
-				/*if(col.gameObject.name == "Player2")
-				{
-					 obj = GameObject.Find ("Player2");
-					 pos = obj.transform.position;
-					 rot = obj.transform.rotation;
-				}
-				else if(col.gameObject.name == "Player1")
-				{
-					obj = GameObject.Find ("Player1");
-					pos = obj.transform.position;
-					rot = obj.transform.rotation;
-				}*/
-
-
-				//Vector3 pos = obj.transform.FindChild("Hand").position;
-				Vector3 pos = obj.transform.position;
-				Quaternion rot = obj.transform.FindChild ("Hand").rotation;
-				
-				float r = Random.value;
-				
-				int s = 0;
-				r = 0.0f;
-				string name = " ";
-				if((r >= 0.0f) && (r < (1.0f/5.0f)))
-				{
-					name = "Rock";
-					s = 0;
-				}
-				if((r >= (1.0f/5.0f)) && (r < (2.0f/5.0f)))
-				{
-					name = "Scissors";
-					s = 1;
-				}
-				if((r >= (2.0f/5.0f)) && (r < (3.0f/5.0f)))
-				{
-					name = "Lizard";
-					s = 2;
-				}
-				if((r >= (3.0f/5.0f)) && (r < (4.0f/5.0f)))
-				{
-					name = "Paper";
-					s = 3;
-				}
-
-				if(r >= (5.0f/6.0f))
-				{
-					name = "Spock";
-					s = 4;
-				}
-				
-				
-				GameObject.Instantiate(Resources.Load (name));
-				GameObject new_obj = GameObject.Find ((name + "(Clone)"));
-				new_obj.transform.position = pos;
-				new_obj.transform.rotation = rot;
-				new_obj.name = "Hand";
-
-				GameObject player_mesh = obj.transform.FindChild ("Hand").gameObject;
-				Destroy (player_mesh);
-				new_obj.transform.parent = obj.transform;
-
-				/*if(col.gameObject.name == "Player2")
-				{
-					new_obj.AddComponent ("Player2_Collisions");
-					Player2_Collisions g  = new_obj.GetComponent<Player2_Collisions>();
-					g.status = s;
-					
-					Rigidbody[] rbodies = obj.GetComponents<Rigidbody>();
-					
-					foreach(Rigidbody ri in rbodies)
-					{
-						UnityEditorInternal.ComponentUtility.CopyComponent(ri);
-						UnityEditorInternal.ComponentUtility.PasteComponentAsNew(new_obj);
-					}
-				}
-				else
-				{
-					new_obj.AddComponent ("Player1_Collisions");
-					Player1_Collisions g  = new_obj.GetComponent<Player1_Collisions>();
-					g.status = s;
-					
-					Rigidbody[] rbodies = obj.GetComponents<Rigidbody>();
-					
-					foreach(Rigidbody ri in rbodies)
-					{
-						UnityEditorInternal.ComponentUtility.CopyComponent(ri);
-						UnityEditorInternal.ComponentUtility.PasteComponentAsNew(new_obj);
-					}
-				}
-				Destroy (obj);
-				Destroy (this.gameObject);*/
-			}
-		}
-	}
 
 
 }
