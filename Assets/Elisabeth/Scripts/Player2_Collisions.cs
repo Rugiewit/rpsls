@@ -228,7 +228,8 @@ public class Player2_Collisions : MonoBehaviour {
 					points.Add (this.gameObject.transform.position);
 					GameObject o = GameObject.Find ("Main Camera");
 					Vector3 cam_vec = (o.transform.position - obj2.transform.position).normalized;
-					points.Add (this.gameObject.transform.position + flying_path_distance * cam_vec);
+					//points.Add (this.gameObject.transform.position + flying_path_distance * cam_vec);
+					points.Add (o.transform.position);
 					//points.Add (new Vector3(500.0f,0.0f,0.0f));
 					//points.Add (this.gameObject.transform.position + flying_path_distance * cam_vec);
 					fly_path.setTarget (obj2, points);

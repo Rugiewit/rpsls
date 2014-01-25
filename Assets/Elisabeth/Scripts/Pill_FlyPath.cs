@@ -9,7 +9,7 @@ public class Pill_FlyPath : MonoBehaviour {
 	public GameObject target;
 	private bool followed = false;
 	private int point_index = 0;
-	private float velocity = 0.1f;
+	private float velocity = 0.5f;
 	private float threshold = 0.1f;
 	// Use this for initialization
 	void Start () {
@@ -28,7 +28,7 @@ public class Pill_FlyPath : MonoBehaviour {
 				Vector3 vec = (target.transform.position - this.transform.position).normalized;
 				this.transform.position = this.transform.position + Time.deltaTime * vec * velocity;
 				Transform particles = this.transform.GetChild (0);
-				particles.LookAt (target.transform.position);
+				particles.LookAt (curve_points[point_index]);
 
 			}
 			else
