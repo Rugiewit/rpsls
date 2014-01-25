@@ -66,8 +66,8 @@ public class Pill_FlyPath : MonoBehaviour {
 			if((col.gameObject.name == "Player1") || (col.gameObject.name == "Player2"))
 			{
 				GameObject obj = col.gameObject;
-				Vector3 pos = Vector3.zero;
-				Quaternion rot = Quaternion.identity;
+
+
 				/*if(col.gameObject.name == "Player2")
 				{
 					 obj = GameObject.Find ("Player2");
@@ -82,8 +82,8 @@ public class Pill_FlyPath : MonoBehaviour {
 				}*/
 
 
-				pos = obj.transform.FindChild("Hand").position;
-				rot = obj.transform.FindChild ("Hand").rotation;
+				Vector3 pos = obj.transform.FindChild("Hand").position;
+				Quaternion rot = obj.transform.FindChild ("Hand").rotation;
 				
 				float r = Random.value;
 				

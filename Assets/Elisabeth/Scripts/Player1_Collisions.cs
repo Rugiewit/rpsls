@@ -69,6 +69,10 @@ public class Player1_Collisions : MonoBehaviour {
 				points.Add (obj.transform.position);
 				fly_path.setTarget (obj, points);
 			}
+			if(fly_path.target == this.gameObject)
+			{
+				Destroy (col.gameObject);
+			}
 
 		}
 

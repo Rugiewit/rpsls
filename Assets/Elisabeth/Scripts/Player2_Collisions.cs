@@ -67,6 +67,11 @@ public class Player2_Collisions : MonoBehaviour {
 				fly_path.setTarget (obj, points);
 			}
 
+			if(fly_path.target == this.gameObject)
+			{
+				Destroy (col.gameObject);
+			}
+
 		}
 
 		if(col.gameObject.name == "Player1")
