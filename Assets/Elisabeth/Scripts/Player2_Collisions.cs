@@ -20,7 +20,7 @@ public class Player2_Collisions : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		deltaTime = Time.deltaTime;
+		/*deltaTime = Time.deltaTime;
 		
 		Vector3 pos = this.gameObject.transform.position;
 		if(Input.GetKey (KeyCode.LeftArrow))
@@ -31,7 +31,7 @@ public class Player2_Collisions : MonoBehaviour {
 			pos.z = pos.z + deltaTime * velocity;
 		if(Input.GetKey (KeyCode.DownArrow))
 			pos.z = pos.z - deltaTime * velocity;
-		this.gameObject.transform.position = pos;
+		this.gameObject.transform.position = pos;*/
 
 		if(fly_away)
 		{

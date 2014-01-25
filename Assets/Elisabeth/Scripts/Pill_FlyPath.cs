@@ -65,10 +65,10 @@ public class Pill_FlyPath : MonoBehaviour {
 			Debug.Log ("Destroy");
 			if((col.gameObject.name == "Player1") || (col.gameObject.name == "Player2"))
 			{
-				GameObject obj = null;
+				GameObject obj = col.gameObject;
 				Vector3 pos = Vector3.zero;
 				Quaternion rot = Quaternion.identity;
-				if(col.gameObject.name == "Player2")
+				/*if(col.gameObject.name == "Player2")
 				{
 					 obj = GameObject.Find ("Player2");
 					 pos = obj.transform.position;
@@ -79,7 +79,11 @@ public class Pill_FlyPath : MonoBehaviour {
 					obj = GameObject.Find ("Player1");
 					pos = obj.transform.position;
 					rot = obj.transform.rotation;
-				}
+				}*/
+
+
+				pos = obj.transform.FindChild("Hand").position;
+				rot = obj.transform.FindChild ("Hand").rotation;
 				
 				float r = Random.value;
 				
@@ -119,9 +123,12 @@ public class Pill_FlyPath : MonoBehaviour {
 				new_obj.transform.position = pos;
 				new_obj.transform.rotation = rot;
 				new_obj.name = obj.name;
-				Destroy (obj);
 
-				if(col.gameObject.name == "Player2")
+				GameObject player_mesh = obj.transform.FindChild ("Hand").gameObject;
+				Destroy (player_mesh);
+				new_obj.transform.parent = obj.transform;
+
+				/*if(col.gameObject.name == "Player2")
 				{
 					new_obj.AddComponent ("Player2_Collisions");
 					Player2_Collisions g  = new_obj.GetComponent<Player2_Collisions>();
@@ -150,7 +157,7 @@ public class Pill_FlyPath : MonoBehaviour {
 					}
 				}
 				Destroy (obj);
-				Destroy (this.gameObject);
+				Destroy (this.gameObject);*/
 			}
 		}
 	}
