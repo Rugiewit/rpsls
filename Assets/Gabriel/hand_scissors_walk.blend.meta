@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7445b8f037e958a4eb0b903ccddb8ca6
+guid: ddeb686c437e71441887caf3aa8bea56
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -69,7 +69,9 @@ ModelImporter:
     400062: toe_R
     4300000: Cube
     7400000: Default Take
+    7400002: walk
     9500000: //RootNode
+    11100000: //RootNode
     13700000: Cube
   materials:
     importMaterials: 1
@@ -121,6 +123,6 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 1
   additionalBone: 0
   userData: 
