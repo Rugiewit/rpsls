@@ -68,7 +68,7 @@ public class MovePlayer : MonoBehaviour {
 		this.rigidbody.AddForce(playerForce);
 	
 
-		this.transform.LookAt(this.rigidbody.velocity+gravity+this.transform.position, gravity);
+		this.transform.LookAt(this.rigidbody.velocity+gravity+this.transform.position, -gravity);
 
 	}
 }
