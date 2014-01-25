@@ -43,10 +43,18 @@ public class GameDirector : MonoBehaviour
 				if (Input.GetKeyDown (KeyCode.Keypad5)) {
 						guiPlayer2.GetComponent<GUIChangeling> ().Change (5);
 				}
+				if (Input.GetKeyDown (KeyCode.Keypad6)) {
+						guiPlayer2.GetComponent<GUIChangeling> ().Change (5);
+						SwitchThePower ();
+				}
 
 
 		}
-	
+		public void SwitchThePower ()
+		{
+				guiPlayer1.GetComponent<GUIChangeling> ().SwitchThePower ();
+				guiPlayer2.GetComponent<GUIChangeling> ().SwitchThePower ();
+		}
 		public void Reset ()
 		{				
 				Spawn (player1);

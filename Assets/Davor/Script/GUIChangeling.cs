@@ -10,14 +10,15 @@ public class GUIChangeling : MonoBehaviour
 		public GameObject scissors = null;
 		public GameObject lizard = null;
 		public GameObject spock = null;
+		public  bool gotThePower;
 		
 		private GameObject current;
-		
 		// Use this for initialization
 		void Start ()
 		{
 				current = Instantiate (birdy, transform.position, transform.rotation) as GameObject;
 				SetUpCurrent ();
+				PaintThePower ();
 		}
 
 		// Update is called once per frame
@@ -56,6 +57,17 @@ public class GUIChangeling : MonoBehaviour
 				}			
 				current = changed;
 				SetUpCurrent ();
+		}
+		public void SwitchThePower ()
+		{
+				gotThePower = !gotThePower;
+				//apply color, shaders or whatnot
+				PaintThePower ();
+		}
+		private void PaintThePower ()
+		{
+				current.renderer.material.color = gotThePower ? new Color (0.9f, 0.1f, 0.7f) : new Color (0.1f, 0.9f, 0.7f); //C#
+
 		}
 		public void Reset ()
 		{
