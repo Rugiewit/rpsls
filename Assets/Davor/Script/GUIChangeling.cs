@@ -71,8 +71,9 @@ public class GUIChangeling : MonoBehaviour
 		}
 		public void Reset ()
 		{
-				
-				current.transform.rotation = Quaternion.identity;
-				Change (3);
+				if (current != null) {
+						current.transform.rotation = Quaternion.identity;
+						Change (3);
+				}
 		}
 }

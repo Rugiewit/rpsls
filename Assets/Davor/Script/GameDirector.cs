@@ -6,11 +6,12 @@ public class GameDirector : MonoBehaviour
 		public GameObject world;
 
 		public GameObject player1;
-
 		public GameObject player2;
 
 		public GameObject guiPlayer1 = null;
 		public GameObject guiPlayer2 = null;
+		public GameObject guiWinPoint1 = null;
+		public GameObject guiWinPoint2 = null;
 
 		public GameObject pill;
 
@@ -44,10 +45,15 @@ public class GameDirector : MonoBehaviour
 						guiPlayer2.GetComponent<GUIChangeling> ().Change (5);
 				}
 				if (Input.GetKeyDown (KeyCode.Keypad6)) {
-						guiPlayer2.GetComponent<GUIChangeling> ().Change (5);
 						SwitchThePower ();
-				}
+				} else
+				if (Input.GetKeyDown (KeyCode.Keypad7)) {
+						int r = Random.Range (0, 3);
+						guiWinPoint1.GetComponent<GuiWinPoint> ().Change (r);
+						r = Random.Range (0, 3);
+						guiWinPoint2.GetComponent<GuiWinPoint> ().Change (r);
 
+				}
 
 		}
 		public void SwitchThePower ()
