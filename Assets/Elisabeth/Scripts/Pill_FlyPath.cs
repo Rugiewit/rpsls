@@ -9,7 +9,7 @@ public class Pill_FlyPath : MonoBehaviour {
 	public GameObject target;
 	private bool followed = false;
 	private int point_index = 0;
-	public float velocity = 4.0f;
+	public float velocity = 0.4f;
 	private float threshold = 0.1f;
 	// Use this for initialization
 	void Start () {
@@ -58,7 +58,7 @@ public class Pill_FlyPath : MonoBehaviour {
 		//this.gameObject.AddComponent<ParticleSystem>();
 	}
 
-	void OnCollisionEnter(Collision col)
+	void OnTriggerEnter(Collider col)
 	{
 		if(col.gameObject == this.target)
 		{
@@ -82,7 +82,8 @@ public class Pill_FlyPath : MonoBehaviour {
 				}*/
 
 
-				Vector3 pos = obj.transform.FindChild("Hand").position;
+				//Vector3 pos = obj.transform.FindChild("Hand").position;
+				Vector3 pos = obj.transform.position;
 				Quaternion rot = obj.transform.FindChild ("Hand").rotation;
 				
 				float r = Random.value;
@@ -122,7 +123,7 @@ public class Pill_FlyPath : MonoBehaviour {
 				GameObject new_obj = GameObject.Find ((name + "(Clone)"));
 				new_obj.transform.position = pos;
 				new_obj.transform.rotation = rot;
-				new_obj.name = obj.name;
+				new_obj.name = "Hand";
 
 				GameObject player_mesh = obj.transform.FindChild ("Hand").gameObject;
 				Destroy (player_mesh);
