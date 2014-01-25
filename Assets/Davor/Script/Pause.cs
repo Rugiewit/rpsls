@@ -5,7 +5,7 @@ public class Pause : MonoBehaviour
 {
 		
 		public bool pause = false;
-		public GUITexture pauseGUI_tex;
+		public GameObject pausedBackground;
 
 		// Use this for initialization
 		void Start ()
@@ -19,22 +19,19 @@ public class Pause : MonoBehaviour
 						pause = !pause;
 				}
 				if (pause) {
-						Stop ();
+						Tweak (0.0f, true);
 			
 				} else {
-						Play ();
+						Tweak (1.0f, false);
 				}
 		}
 		
-		void Play ()
+		void  Tweak (float timeScale, bool enableTex)
 		{
-				Time.timeScale = 1.0f;
-				pauseGUI_tex.enabled = false;
+				Time.timeScale = timeScale;				
+				GUITexture pauseGUI_tex = pausedBackground.GetComponent<GUITexture> ();
+				pauseGUI_tex.enabled = enableTex;
 
 		}
-		void Stop ()
-		{
-				Time.timeScale = 0.0f;
-				pauseGUI_tex.enabled = true;
-		}
+		
 }
