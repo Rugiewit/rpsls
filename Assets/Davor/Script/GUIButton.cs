@@ -12,6 +12,8 @@ public class GUIButton : MonoBehaviour
 		private static int posY = (Screen.height / 2) - (numOfButtons * height) + ((numOfButtons - 1) * spacingY);
 
 		public string strName = "START";
+		public string cntName = "CONTINUE";
+
 		public string rsName = "RESET";
 		public string exName = "EXIT";
 		private bool paused = true;
@@ -34,20 +36,22 @@ public class GUIButton : MonoBehaviour
 		private void OnGUI ()
 		{
 				if (paused) {
+						GameObject gameDirectorObj = GameObject.Find ("GameDirector");
+						GameDirector gameDirector = gameDirectorObj.GetComponent<GameDirector> ();		
+
 						//on Start ButtonClicked
-						if (GUI.Button (new Rect (posX, posY, width, height), strName)) {
-								GameObject mainCamera = GameObject.Find ("Main Camera");
-								Pause pause = mainCamera.GetComponent<Pause> ();
-								pause.pause = false;
+						string btnName = gameDirector.IsStarted () ? cntName : strName;
+						if (GUI.Button (new Rect (posX, posY, width, height), btnName)) {
+								Play (gameDirectorObj);
+								gameDirector.setStarted (true);
 						}
 						//on Reset Button Clicked
 						if (GUI.Button (new Rect (posX, posY + ((numOfButtons - 2) * spacingY), width, height), rsName)) {
-								GameObject mainCamera = GameObject.Find ("Main Camera");
-								Pause pause = mainCamera.GetComponent<Pause> ();
+								Play (gameDirectorObj);
+								//reset all parameters here	
+								gameDirector.Reset ();
 								
-								//reset all parameters here
 					
-								pause.pause = false;
 						}
 						//on Exit Button Clicked
 						if (GUI.Button (new Rect (posX, posY + ((numOfButtons - 1) * spacingY), width, height), exName)) {
@@ -55,4 +59,10 @@ public class GUIButton : MonoBehaviour
 						}
 				}
 		}
+		private void Play (GameObject gameDirectorObj)
+		{				
+				Pause pause = gameDirectorObj.GetComponent<Pause> ();
+				pause.pause = false;
+		}
+
 }
