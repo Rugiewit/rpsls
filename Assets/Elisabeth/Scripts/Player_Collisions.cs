@@ -2,87 +2,108 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Player2_Collisions : MonoBehaviour {
+
+public class Player_Collisions : MonoBehaviour {
 
 	public int status = 0;
 	private float deltaTime;
-	
+
 	private float velocity = 10.0f;
 	public bool fly_away = false;
-	public float fly_away_speed = 0.01f;
-	
+	private float fly_away_speed = 0.2f;
+
 	private float fly_threshold = 0.1f;
-	private float flying_path_distance = 0.2f;
+	private float flying_path_distance = 0.9f;
+
+	public GameObject other_player;
+
+	// Use this for initialization
 	void Start () {
-		
 		status = 3;
-		
+		GameObject.Instantiate(Resources.Load ("Pill"));
+		GameObject new_obj = GameObject.Find ((name + "(Clone)"));
+		new_obj.name = "Pill";
+		new_obj.transform.localScale = new Vector3(0.25f,0.25f,0.25f);
+		new_obj.transform.localEulerAngles = new Vector3(-90,0,0);
+		new_obj.transform.localPosition = Vector3.zero;
+
+
+	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		/*deltaTime = Time.deltaTime;
-		
-		Vector3 pos = this.gameObject.transform.position;
-		if(Input.GetKey (KeyCode.LeftArrow))
-			pos.x = pos.x - (deltaTime) * velocity;
-		if(Input.GetKey (KeyCode.RightArrow))
-			pos.x = pos.x + deltaTime * velocity;
-		if(Input.GetKey (KeyCode.UpArrow))
-			pos.z = pos.z + deltaTime * velocity;
-		if(Input.GetKey (KeyCode.DownArrow))
-			pos.z = pos.z - deltaTime * velocity;
-		this.gameObject.transform.position = pos;*/
+
 
 		if(fly_away)
 		{
-			//Debug.Log ("Fly Away");
-			GameObject obj = GameObject.Find ("Main Camera");
-			Vector3 vec = (obj.transform.position - this.gameObject.transform.position).normalized;
-			this.transform.position = this.transform.position + Time.deltaTime * vec * 0.1f;
 
-			if((obj.transform.position - this.gameObject.transform.position).magnitude < fly_threshold)
+			GameObject obj = GameObject.Find ("World");
+			Vector3 vec = (obj.transform.position - this.gameObject.transform.position).normalized;
+
+			this.transform.position = this.transform.position - Time.deltaTime * vec * fly_away_speed;
+
+			if((obj.transform.position - this.gameObject.transform.position).magnitude > flying_path_distance)
 			{
 				fly_away = false;
+				//GameObject p2 = GameObject.Find ("Player2");
+				//Player2_Collisions p2_script = p2.GetComponent<Player2_Collisions>();
+				Player_Collisions p2_script = other_player.GetComponent<Player_Collisions>();
+				string name = " ";
+				if(p2_script.status == 0)//Rock
+				{
+					this.status = 4;//Spock
+					name = "hand_spock";
+				}
+				if(p2_script.status == 1) //Scissors
+				{
+					this.status = 4;
+					name = "hand_spock";
+				}
+				if(p2_script.status == 2) //Lizard
+				{
+					this.status = 0; //Rock
+					name = "hand_rock";
+				}
+				if(p2_script.status == 3)//Paper
+				{
+					this.status = 2;
+					name = "hand_lizard";
+				}
+				if(p2_script.status == 4) //Spock
+				{
+					this.status = 2;
+					name = "hand_lizard";
+				}
+
 				//this.transform.position = Vector3.zero;
+
+
+				GameObject.Instantiate(Resources.Load (name));
+				GameObject new_obj = GameObject.Find ((name + "(Clone)"));
+				new_obj.name = "Hand";
+				
+				GameObject player_mesh = this.gameObject.transform.FindChild ("Hand").gameObject;
+				Destroy (player_mesh);
+				new_obj.transform.parent = this.gameObject.transform;
+				new_obj.transform.localScale = new Vector3(0.25f,0.25f,0.25f);
+				new_obj.transform.localEulerAngles = new Vector3(-90,0,0);
+				new_obj.transform.localPosition = Vector3.zero;
+
 			}
-			
 		}
-		
-		
+
+	
 	}
 
 	void OnCollisionEnter(Collision col)
 	{
-		/*Debug.Log ("Collision");
-		if(col.gameObject.name == "Pill")
-		{
-			Pill_FlyPath fly_path = col.gameObject.GetComponent<Pill_FlyPath>();
-			
-			GameObject p1 = GameObject.Find ("Player1");
-			Player1_Collisions c = p1.GetComponent<Player1_Collisions>();
-			if((fly_path.target != this.gameObject) && (!c.fly_away))
-			{
-				GameObject obj = GameObject.Find ("Player1");
-				List<Vector3>points = new List<Vector3>();
-				points.Add (this.gameObject.transform.position);
-				GameObject o = GameObject.Find ("Main Camera");
-				Vector3 cam_vec = (o.transform.position - obj.transform.position).normalized;
-				//points.Add (this.gameObject.transform.position + flying_path_distance * cam_vec);
-				points.Add (obj.transform.position);
-				fly_path.setTarget (obj, points);
-			}
-			if(fly_path.target == this.gameObject)
-			{
-				Destroy (col.gameObject);
-			}
-			
-		}*/
-		
-		if(col.gameObject.name == "Player1")
+
+
+		if(col.gameObject.name == other_player.name)
 		{
 			//Debug.Log ("Fly Away");
-			Player1_Collisions g  = col.gameObject.GetComponent<Player1_Collisions>();
+			Player_Collisions g  = col.gameObject.GetComponent<Player_Collisions>();
 			if(g.status != this.status)
 			{
 				switch(this.status)
@@ -131,32 +152,33 @@ public class Player2_Collisions : MonoBehaviour {
 					//current_collider.enabled = false;
 				}
 
-				
-				
 			}
 		}
+
+
+
+			
+
 		
-		
-		
-		
-		
-		
-	}	
+	}
 
 	void OnTriggerEnter(Collider col)
 	{
-		
-		
+
+
 
 		if(col.gameObject.name == "Pill")
 		{
-
+			Debug.Log ("Pill detected");
 			GameObject obj = col.gameObject;
 			Pill_FlyPath path_script = obj.GetComponent<Pill_FlyPath>();
 			if(this.gameObject == path_script.target)
 			{
-
-
+				
+	
+				//Vector3 pos = obj.transform.FindChild("Hand").position;
+				//Vector3 pos = this.gameObject.transform.FindChild ("Hand").position;
+				//Quaternion rot = this.gameObject.transform.FindChild ("Hand").rotation;
 				
 				float r = Random.value;
 				
@@ -189,20 +211,15 @@ public class Player2_Collisions : MonoBehaviour {
 					name = "hand_spock";
 					s = 4;
 				}
-				
-				this.status = s;
 
+
+				this.status = s;
 				GameObject.Instantiate(Resources.Load (name));
 				GameObject new_obj = GameObject.Find ((name + "(Clone)"));
-				//new_obj.transform.position = pos;
-				//new_obj.transform.rotation = rot;
-
-				GameObject player_mesh = this.gameObject.transform.FindChild ("Hand").gameObject;
-				Destroy (player_mesh);
-
 				new_obj.name = "Hand";
 				
-
+				GameObject player_mesh = this.gameObject.transform.FindChild ("Hand").gameObject;
+				Destroy (player_mesh);
 				new_obj.transform.parent = this.gameObject.transform;
 				new_obj.transform.localScale = new Vector3(0.25f,0.25f,0.25f);
 				new_obj.transform.localEulerAngles = new Vector3(-90,0,0);
@@ -210,41 +227,38 @@ public class Player2_Collisions : MonoBehaviour {
 
 				Destroy (obj);
 				
-
-			}
 			
-		
-
+			}
 			else
 			{
 				Pill_FlyPath fly_path = col.gameObject.GetComponent<Pill_FlyPath>();
 				
-				GameObject p1 = GameObject.Find ("Player1");
-				Player1_Collisions c = p1.GetComponent<Player1_Collisions>();
+				//GameObject p2 = GameObject.Find ("Player2");
+				Player_Collisions c = other_player.GetComponent<Player_Collisions>();
 				if((fly_path.target != this.gameObject) && (!c.fly_away))
 				{
-					GameObject obj2 = GameObject.Find ("Player1");
+					//GameObject obj2 = GameObject.Find ("Player2");
+
 					List<Vector3>points = new List<Vector3>();
 					points.Add (this.gameObject.transform.position);
 					GameObject o = GameObject.Find ("Main Camera");
-					Vector3 cam_vec = (o.transform.position - obj2.transform.position).normalized;
-					//points.Add (this.gameObject.transform.position + flying_path_distance * cam_vec);
+					Vector3 cam_vec = (o.transform.position - other_player.transform.position).normalized;
+					//points.Add (this.transform.position + flying_path_distance * cam_vec);
 					points.Add (o.transform.position);
-					//points.Add (new Vector3(500.0f,0.0f,0.0f));
-					//points.Add (this.gameObject.transform.position + flying_path_distance * cam_vec);
-					fly_path.setTarget (obj2, points);
+					Debug.Log (this.transform.position + flying_path_distance * cam_vec);
+					//points.Add (obj2.transform.position);
+					fly_path.setTarget (other_player, points);
 				}
 				if(fly_path.target == this.gameObject)
 				{
 					Destroy (col.gameObject);
 				}
+
 			}
 
+		
 		}
-
-
 	}
-
 
 
 }

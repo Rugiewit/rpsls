@@ -18,13 +18,13 @@ public class SphereGravity : MonoBehaviour {
 		bool state = false;
 		if(this.gameObject.name == "Player1")
 		{
-			Player1_Collisions status = this.gameObject.GetComponent<Player1_Collisions>();
+			Player_Collisions status = this.gameObject.GetComponent<Player_Collisions>();
 			state = status.fly_away;
 		}
 
 		if(this.gameObject.name == "Player2")
 		{
-			Player2_Collisions status = this.gameObject.GetComponent<Player2_Collisions>();
+			Player_Collisions status = this.gameObject.GetComponent<Player_Collisions>();
 			state = status.fly_away;
 		}
 		if(!state)
