@@ -11,6 +11,7 @@ public class Player2_Collisions : MonoBehaviour {
 	private float velocity = 10.0f;
 	public bool fly_away = false;
 	public float fly_threshold = 20.0f;
+	public float flying_path_distance = 0.0f;
 	// Use this for initialization
 	void Start () {
 		
@@ -63,6 +64,9 @@ public class Player2_Collisions : MonoBehaviour {
 				GameObject obj = GameObject.Find ("Player1");
 				List<Vector3>points = new List<Vector3>();
 				points.Add (this.gameObject.transform.position);
+				GameObject o = GameObject.Find ("Main Camera");
+				Vector3 cam_vec = (o.transform.position - obj.transform.position).normalized;
+				//points.Add (this.gameObject.transform.position + flying_path_distance * cam_vec);
 				points.Add (obj.transform.position);
 				fly_path.setTarget (obj, points);
 			}
