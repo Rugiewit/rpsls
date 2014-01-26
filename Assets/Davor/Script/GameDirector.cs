@@ -31,13 +31,34 @@ public class GameDirector : MonoBehaviour
 		// Update is called once per frame
 		void Update ()
 		{	
-			timeSinceLastPill += Time.deltaTime;
-			if(timeSinceLastPill > spawnPillTimer)
-			{
-				SpawnPill();
-				timeSinceLastPill = 0;
-			}
+				timeSinceLastPill += Time.deltaTime;
+				if (timeSinceLastPill > spawnPillTimer) {
+						SpawnPill ();
+						timeSinceLastPill = 0;
+				}
 		}
+
+		public void ScorePoint (string name)
+		{
+				if (player1.name == name) {
+						GuiWinPoint gwp1 = guiWinPoint1.GetComponent<GuiWinPoint> ();
+						GuiWinPoint gwp2 = guiWinPoint2.GetComponent<GuiWinPoint> ();
+						if (gwp2.numOfPoints == 0) {
+								gwp1.Change (gwp1.numOfPoints + 1);
+						} else {
+								gwp2.Change (gwp2.numOfPoints - 1);
+						}
+				} else {
+						GuiWinPoint gwp1 = guiWinPoint2.GetComponent<GuiWinPoint> ();
+						GuiWinPoint gwp2 = guiWinPoint1.GetComponent<GuiWinPoint> ();
+						if (gwp2.numOfPoints == 0) {
+								gwp1.Change (gwp1.numOfPoints + 1);
+						} else {
+								gwp2.Change (gwp2.numOfPoints - 1);
+						}
+				}
+		}
+
 		public void ChangePlayerStatus (string playerName, int status)
 		{
 				if (player1.gameObject.name == playerName) {
@@ -134,10 +155,10 @@ public class GameDirector : MonoBehaviour
 				return isStarted;
 		}
 
-		public void SpawnPill()
+		public void SpawnPill ()
 		{
-			Vector3 spawnPos = Random.onUnitSphere * 0.5f;
-			GameObject new_obj = GameObject.Instantiate (pillPrefab,spawnPos,pillPrefab.transform.rotation) as GameObject;
-			new_obj.name = "Pill";
+				Vector3 spawnPos = Random.onUnitSphere * 0.5f;
+				GameObject new_obj = GameObject.Instantiate (pillPrefab, spawnPos, pillPrefab.transform.rotation) as GameObject;
+				new_obj.name = "Pill";
 		}
 }

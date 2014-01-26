@@ -26,7 +26,7 @@ public class Player_Collisions : MonoBehaviour
 				status = 3;
 
 				GameObject camera = GameObject.Find ("Main Camera");
-				fly_sound = camera.GetComponent<Audio_Script>().source4;
+				fly_sound = camera.GetComponent<Audio_Script> ().source4;
 				
 				//GameObject new_obj = GameObject.Instantiate (Resources.Load ("Pill")) as GameObject;
 				//	new_obj.name = "Pill";
@@ -77,7 +77,7 @@ public class Player_Collisions : MonoBehaviour
 								gd.ChangePlayerStatus (this.gameObject.name, status);
 
 								
-								GameObject new_obj = GameObject.Instantiate (hands[this.status]) as GameObject;
+								GameObject new_obj = GameObject.Instantiate (hands [this.status]) as GameObject;
 
 								new_obj.name = "Hand";
 				
@@ -106,6 +106,12 @@ public class Player_Collisions : MonoBehaviour
 						fly_away = GameDirector.checkIsStatusLosing (this.status, g.status);
 						if (g.status != this.status) {
 								fly_away = GameDirector.checkIsStatusLosing (this.status, g.status);
+								//score a point 
+								GameObject god = GameObject.Find ("GameDirector");	
+								GameDirector gd = god.GetComponent<GameDirector> ();
+								if (!fly_away) {
+										gd.ScorePoint (this.gameObject.name);
+								}
 
 								fly_sound.Play ();
 								
@@ -169,7 +175,7 @@ public class Player_Collisions : MonoBehaviour
 								GameDirector gd = god.GetComponent<GameDirector> ();
 								gd.ChangePlayerStatus (this.gameObject.name, status);
 
-								GameObject new_obj = GameObject.Instantiate (hands[this.status]) as GameObject;
+								GameObject new_obj = GameObject.Instantiate (hands [this.status]) as GameObject;
 								
 								new_obj.name = "Hand";
 				
