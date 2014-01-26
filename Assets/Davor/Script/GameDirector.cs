@@ -137,7 +137,6 @@ public class GameDirector : MonoBehaviour
 		public void SpawnPill()
 		{
 			Vector3 spawnPos = Random.onUnitSphere * 0.5f;
-			Debug.Log(spawnPos);
 			GameObject new_obj = GameObject.Instantiate (pillPrefab,spawnPos,pillPrefab.transform.rotation) as GameObject;
 			new_obj.name = "Pill";
 		}
