@@ -4,13 +4,15 @@ using System.Collections;
 public class GUIChangeling : MonoBehaviour
 {
 		public float scale = 0.2f;
-
+		
 		private string birdy = "hand_Fyou";
 		private string rock = "hand_rock";
 		private string paper = "hand_paper";
 		private string scissors = "hand_scissors";
 		private string lizard = "hand_lizard";
 		private string spock = "hand_spock";
+		public Color color = Color.white;
+		public Light light;
 		public  bool gotThePower;
 		
 		private GameObject current;
@@ -23,7 +25,7 @@ public class GUIChangeling : MonoBehaviour
 				current = Instantiate (Resources.Load (paper), transform.position, transform.rotation) as GameObject;
 				current.transform.parent = transform;
 				current.transform.localScale = new Vector3 (scale, scale, scale);
-
+				Paint ();
 				PaintThePower ();
 		}
 
@@ -78,7 +80,7 @@ public class GUIChangeling : MonoBehaviour
 						Debug.Log ("changed is NULL");
 				}
 				currentState = state;
-				
+				Paint ();
 				PaintThePower ();	
 
 		}
@@ -86,25 +88,22 @@ public class GUIChangeling : MonoBehaviour
 		{
 				gotThePower = power;
 				//apply color, shaders or whatnot
+				Paint ();
 				PaintThePower ();
+		}
+		private void Paint ()
+		{
+				if (current != null) {
+						Renderer[] renList = current.gameObject.GetComponentsInChildren<Renderer> ();
+						foreach (Renderer r in renList) {
+								r.material.color = color;
+
+						}		
+				}
 		}
 		private void PaintThePower ()
 		{
-				if (current != null) {
-						Color c = Color.black;
-						if (gotThePower) {
-								c = Color.red;
-					
-						} else {
-								c = Color.blue;
-								//current.gameObject.GetComponentInChildren<Renderer> (Renderer).material.color = Color.green;
-								//current.renderer.material = weaker_mat;
-						}//current.renderer.material.color = gotThePower ? new Color (0.9f, 0.1f, 0.7f) : new Color (0.1f, 0.9f, 0.7f); //C#
-						Renderer[] renList = current.gameObject.GetComponentsInChildren<Renderer> ();
-						foreach (Renderer r in renList) {
-								r.material.color = c;
-						}		
-				}
+				
 		}
 		public void Reset ()
 		{
