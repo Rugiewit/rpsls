@@ -20,13 +20,12 @@ public class Player_Collisions : MonoBehaviour
 
 		public GameObject[] hands; 
 		public AudioSource fly_sound;
-<<<<<<< HEAD
 
 		public Material mat;
 
-=======
+
 		public AudioSource collect_sound;
->>>>>>> f7a9b09429b3e7b9b157441fa072413fccf0ddc1
+
 		// Use this for initialization
 		void Start ()
 		{
