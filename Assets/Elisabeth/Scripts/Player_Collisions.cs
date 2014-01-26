@@ -48,7 +48,7 @@ public class Player_Collisions : MonoBehaviour
 								//GameObject p2 = GameObject.Find ("Player2");
 								//Player2_Collisions p2_script = p2.GetComponent<Player2_Collisions>();
 								Player_Collisions p2_script = other_player.GetComponent<Player_Collisions> ();
-								string name = " ";
+								string name = "hand_spock";
 								if (p2_script.status == 0) {//Rock
 										this.status = 4;//Spock
 										name = "hand_spock";
@@ -142,7 +142,7 @@ public class Player_Collisions : MonoBehaviour
 				
 								int s = 0;
 
-								string name = " ";
+								string name = "hand_rock";
 								if ((r >= 0.0f) && (r < (1.0f / 5.0f))) {
 										name = "hand_rock";
 										s = 0;
@@ -205,7 +205,7 @@ public class Player_Collisions : MonoBehaviour
 										fly_path.setTarget (other_player, points);
 								}
 								if (fly_path.target == this.gameObject) {
-										Destroy (col.gameObject);
+										//Destroy (col.gameObject);
 								}
 
 						}
