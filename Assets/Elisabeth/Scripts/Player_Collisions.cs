@@ -32,14 +32,13 @@ public class Player_Collisions : MonoBehaviour
 				status = 3;
 
 				GameObject camera = GameObject.Find ("Main Camera");
-<<<<<<< HEAD
+
+
 				fly_sound = camera.GetComponent<Audio_Script> ().source4;
-=======
-				fly_sound = camera.GetComponent<Audio_Script>().source4;
 
 
-				collect_sound = camera.GetComponent<Audio_Script>().source5;
->>>>>>> 60fc79d56078a94e59ac3096b7a084d0f07e033a
+				collect_sound = camera.GetComponent<Audio_Script> ().source5;
+
 				
 				//GameObject new_obj = GameObject.Instantiate (Resources.Load ("Pill")) as GameObject;
 				//	new_obj.name = "Pill";
@@ -100,7 +99,7 @@ public class Player_Collisions : MonoBehaviour
 								new_obj.transform.localScale = new Vector3 (0.25f, 0.25f, 0.25f);
 								new_obj.transform.localEulerAngles = new Vector3 (-90, 0, 0);
 								new_obj.transform.localPosition = Vector3.zero;
-								SetTexture(new_obj);
+								SetTexture (new_obj);
 								
 
 						}
@@ -199,7 +198,7 @@ public class Player_Collisions : MonoBehaviour
 								new_obj.transform.localEulerAngles = new Vector3 (-90, 0, 0);
 								new_obj.transform.localPosition = Vector3.zero;
 								
-								SetTexture(new_obj);
+								SetTexture (new_obj);
 
 
 								Destroy (obj);
@@ -235,12 +234,11 @@ public class Player_Collisions : MonoBehaviour
 		}
 
 
-	public void SetTexture(GameObject new_obj)
-	{
-		foreach (SkinnedMeshRenderer smr in new_obj.GetComponentsInChildren<SkinnedMeshRenderer>())
+		public void SetTexture (GameObject new_obj)
 		{
-			smr.material = mat; 
-		}	
-	}
+				foreach (SkinnedMeshRenderer smr in new_obj.GetComponentsInChildren<SkinnedMeshRenderer>()) {
+						smr.material = mat; 
+				}	
+		}
 
 }

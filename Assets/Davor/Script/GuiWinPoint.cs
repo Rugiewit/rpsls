@@ -7,7 +7,7 @@ public class GuiWinPoint : MonoBehaviour
 		public List<GameObject> myList ;
 		public int numOfPoints = 0;
 		public float span = 0.05f;
-		public float scale = 0.001f;
+		public float scale = 0.02f;
 		// Use this for initialization
 		void Start ()
 		{
