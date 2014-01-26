@@ -15,6 +15,7 @@ public class Audio_Script : MonoBehaviour {
 	public AudioSource source2;
 	public AudioSource source3;
 	public AudioSource source4;
+	public AudioSource source5;
 
 	public float loud = 0.8f;
 	// Use this for initialization
