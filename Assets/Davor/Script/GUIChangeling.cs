@@ -3,76 +3,97 @@ using System.Collections;
 
 public class GUIChangeling : MonoBehaviour
 {
-		public float scale = 0.5f;
-		public GameObject birdy = null;
-		public GameObject rock = null;
-		public GameObject paper = null;
-		public GameObject scissors = null;
-		public GameObject lizard = null;
-		public GameObject spock = null;
+		public float scale = 0.2f;
+		private string birdy = "hand_Fyou";
+		private string rock = "hand_rock";
+		private string paper = "hand_paper";
+		private string scissors = "hand_scissors";
+		private string lizard = "hand_lizard";
+		private string spock = "hand_spock";
 		public  bool gotThePower;
 		
 		private GameObject current;
+
+		private int currentState = 3;
+		private int nextState = 3;
 		// Use this for initialization
 		void Start ()
 		{
-				current = Instantiate (birdy, transform.position, transform.rotation) as GameObject;
-				SetUpCurrent ();
+				current = Instantiate (Resources.Load (paper), transform.position, transform.rotation) as GameObject;
+				current.transform.parent = transform;
+				current.transform.localScale = new Vector3 (scale, scale, scale);
+
 				PaintThePower ();
 		}
 
 		// Update is called once per frame
 		void Update ()
 		{
-			
+				if (nextState != currentState) {
+						Change (nextState);
+				}
 		}
-		private void SetUpCurrent ()
+		public void setNextState (int state)
 		{
-				current.transform.parent = transform;
-				current.transform.localScale = new Vector3 (scale, scale, scale);
+				nextState = state;
 		}
-		public void Change (int state)
+		private void Change (int state)
 		{
-				GameObject changed = null;
-				Destroy (current);
+				GameObject changed = current;
+				
 				switch (state) {
 				case 0:
-						changed = Instantiate (rock, transform.position, transform.rotation) as GameObject;
+						current = Instantiate (Resources.Load (rock), transform.position, transform.rotation) as GameObject;
 						break;
 				case 1:
-						changed = Instantiate (scissors, transform.position, transform.rotation) as GameObject;
+						current = Instantiate (Resources.Load (scissors), transform.position, transform.rotation) as GameObject;
 						break;
 				case 2:
-						changed = Instantiate (lizard, transform.position, transform.rotation) as GameObject;
+						current = Instantiate (Resources.Load (lizard), transform.position, transform.rotation) as GameObject;
 						break;
 				case 3:
-						changed = Instantiate (paper, transform.position, transform.rotation) as GameObject;
+						current = Instantiate (Resources.Load (paper), transform.position, transform.rotation) as GameObject;
 						break;
 				case 4:
-						changed = Instantiate (spock, transform.position, transform.rotation) as GameObject;
+						current = Instantiate (Resources.Load (spock), transform.position, transform.rotation) as GameObject;
 						break;
 				case 5:
-						changed = Instantiate (birdy, transform.position, transform.rotation) as GameObject;
+						current = Instantiate (Resources.Load (birdy), transform.position, transform.rotation) as GameObject;
 						break;
 				}			
-				current = changed;
-				SetUpCurrent ();
+			
+				//current.transform.parent = changed.transform.parent;
+				current.transform.parent = this.gameObject.transform;
+
+				current.transform.localScale = new Vector3 (scale, scale, scale);
+				current.transform.localEulerAngles = new Vector3 (0, 0, 0);
+				current.transform.localPosition = Vector3.zero;
+
+
+				if (changed != null) {
+						Destroy (changed);
+				} else {
+						Debug.Log ("changed is NULL");
+				}
+				currentState = state;
+
 		}
-		public void SwitchThePower ()
+		public void SetThePower (bool power)
 		{
-				gotThePower = !gotThePower;
+				gotThePower = power;
 				//apply color, shaders or whatnot
 				PaintThePower ();
 		}
 		private void PaintThePower ()
 		{
-				current.renderer.material.color = gotThePower ? new Color (0.9f, 0.1f, 0.7f) : new Color (0.1f, 0.9f, 0.7f); //C#
-
+				if (current != null) {
+						//current.renderer.material.color = gotThePower ? new Color (0.9f, 0.1f, 0.7f) : new Color (0.1f, 0.9f, 0.7f); //C#
+				}
 		}
 		public void Reset ()
 		{
 				if (current != null) {
-						current.transform.rotation = Quaternion.identity;
+						
 						Change (3);
 				}
 		}

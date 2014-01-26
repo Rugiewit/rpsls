@@ -23,6 +23,6 @@ public class Spawn : MonoBehaviour
 		public void Respawn ()
 		{
 				//animate before if needed
-				transform.position = new Vector3 (spawnX, spawnY, spawnZ);
+				//transform.position = new Vector3 (spawnX, spawnY, spawnZ);
 		}
 }
