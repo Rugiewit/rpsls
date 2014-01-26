@@ -20,6 +20,9 @@ public class Player_Collisions : MonoBehaviour
 
 		public GameObject[] hands; 
 		public AudioSource fly_sound;
+
+		public Material mat;
+
 		// Use this for initialization
 		void Start ()
 		{
@@ -87,7 +90,7 @@ public class Player_Collisions : MonoBehaviour
 								new_obj.transform.localScale = new Vector3 (0.25f, 0.25f, 0.25f);
 								new_obj.transform.localEulerAngles = new Vector3 (-90, 0, 0);
 								new_obj.transform.localPosition = Vector3.zero;
-								
+								SetTexture(new_obj);
 								
 
 						}
@@ -180,6 +183,8 @@ public class Player_Collisions : MonoBehaviour
 								new_obj.transform.localEulerAngles = new Vector3 (-90, 0, 0);
 								new_obj.transform.localPosition = Vector3.zero;
 								
+								SetTexture(new_obj);
+
 
 								Destroy (obj);
 				
@@ -212,5 +217,13 @@ public class Player_Collisions : MonoBehaviour
 				}
 		}
 
+
+	public void SetTexture(GameObject new_obj)
+	{
+		foreach (SkinnedMeshRenderer smr in new_obj.GetComponentsInChildren<SkinnedMeshRenderer>())
+		{
+			smr.material = mat; 
+		}	
+	}
 
 }
