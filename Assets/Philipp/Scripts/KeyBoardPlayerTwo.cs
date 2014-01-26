@@ -13,10 +13,10 @@ public class KeyBoardPlayerTwo : MonoBehaviour {
 	public void Update () 
 	{
 		Movement movement = new Movement(
-			Input.GetKey(KeyCode.Keypad8),
-			Input.GetKey(KeyCode.Keypad5),
-			Input.GetKey(KeyCode.Keypad4),
-			Input.GetKey(KeyCode.Keypad6));
+			Input.GetKey(KeyCode.Keypad8) || Input.GetAxis("TwoUp") == -1,
+			Input.GetKey(KeyCode.Keypad5) || Input.GetAxis("TwoUp") == 1,
+			Input.GetKey(KeyCode.Keypad4) || Input.GetAxis("TwoLeft") == -1,
+			Input.GetKey(KeyCode.Keypad6) || Input.GetAxis("TwoLeft") == 1 );
 		MovePlayer moveplayer = this.GetComponent<MovePlayer>();
 		if(moveplayer != null)
 		{

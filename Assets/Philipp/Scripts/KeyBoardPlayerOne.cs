@@ -13,10 +13,10 @@ public class KeyBoardPlayerOne : MonoBehaviour {
 	public void Update () 
 	{
 		Movement movement = new Movement(
-			Input.GetKey("w"),
-			Input.GetKey("s"),
-			Input.GetKey("a"),
-			Input.GetKey("d"));
+			Input.GetKey("w") || Input.GetAxis("OneUp") == -1,
+			Input.GetKey("s") || Input.GetAxis("OneUp") == 1,
+			Input.GetKey("a") || Input.GetAxis("OneLeft") == -1,
+			Input.GetKey("d") || Input.GetAxis("OneLeft") == 1);
 		MovePlayer moveplayer = this.GetComponent<MovePlayer>();
 		if(moveplayer != null)
 		{

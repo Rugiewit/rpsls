@@ -11,7 +11,7 @@ Platform assembly: D:\gitRepo\rpsls\rpsls_Data\Managed\UnityEngine.dll (this mes
 Loading D:\gitRepo\rpsls\rpsls_Data\Managed\UnityEngine.dll into Unity Child Domain
 Platform assembly: D:\gitRepo\rpsls\rpsls_Data\Managed\Assembly-CSharp.dll (this message is harmless)
 Loading D:\gitRepo\rpsls\rpsls_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-- Completed reload, in  0.048 seconds
+- Completed reload, in  0.054 seconds
 desktop: 1600x900 60Hz; virtual: 1600x900 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.

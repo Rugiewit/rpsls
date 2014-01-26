@@ -25,42 +25,80 @@ public class GameDirector : MonoBehaviour
 
 		// Update is called once per frame
 		void Update ()
-		{
-				if (Input.GetKeyDown (KeyCode.Keypad0)) {
-						guiPlayer1.GetComponent<GUIChangeling> ().Change (0);
-				} else
-				if (Input.GetKeyDown (KeyCode.Keypad1)) {
-						guiPlayer1.GetComponent<GUIChangeling> ().Change (1);
-				} else
-				if (Input.GetKeyDown (KeyCode.Keypad2)) {
-						guiPlayer2.GetComponent<GUIChangeling> ().Change (2);
-				} else
-				if (Input.GetKeyDown (KeyCode.Keypad3)) {
-						guiPlayer2.GetComponent<GUIChangeling> ().Change (3);
-				} else
-				if (Input.GetKeyDown (KeyCode.Keypad4)) {
-						guiPlayer1.GetComponent<GUIChangeling> ().Change (4);
-				}
-				if (Input.GetKeyDown (KeyCode.Keypad5)) {
-						guiPlayer2.GetComponent<GUIChangeling> ().Change (5);
-				}
-				if (Input.GetKeyDown (KeyCode.Keypad6)) {
-						SwitchThePower ();
-				} else
-				if (Input.GetKeyDown (KeyCode.Keypad7)) {
-						int r = Random.Range (0, 3);
-						guiWinPoint1.GetComponent<GuiWinPoint> ().Change (r);
-						r = Random.Range (0, 3);
-						guiWinPoint2.GetComponent<GuiWinPoint> ().Change (r);
-
-				}
-
+		{	
 		}
-		public void SwitchThePower ()
+		public void ChangePlayerStatus (string playerName, int status)
 		{
-				guiPlayer1.GetComponent<GUIChangeling> ().SwitchThePower ();
-				guiPlayer2.GetComponent<GUIChangeling> ().SwitchThePower ();
+				if (player1.gameObject.name == playerName) {
+						guiPlayer1.GetComponent<GUIChangeling> ().setNextState (status);
+				} else {
+						guiPlayer2.GetComponent<GUIChangeling> ().setNextState (status);
+				}
+				//check who is winning set into power
+				int p1s = player1.GetComponent<Player_Collisions> ().status;	
+				int p2s = player2.GetComponent<Player_Collisions> ().status;
+				SetThePower (1, checkIsStatusLosing (p1s, p2s));
 		}
+		public void SetThePower (int player, bool power)
+		{
+				if (player == 1) {
+						guiPlayer1.GetComponent<GUIChangeling> ().SetThePower (power);
+						guiPlayer2.GetComponent<GUIChangeling> ().SetThePower (!power);
+				} else {
+						guiPlayer1.GetComponent<GUIChangeling> ().SetThePower (!power);
+						guiPlayer2.GetComponent<GUIChangeling> ().SetThePower (power);
+				}
+		}
+		public static bool checkIsStatusLosing (int statusSource, int statusTarget)
+		{
+				if (statusSource != statusTarget) {
+						switch (statusSource) {
+						case 0: //Rock
+								{
+										if (statusTarget == 3)//Paper
+												return true;
+										if (statusTarget == 4)//Spock
+												return true;
+								}
+								break;
+						case 1: //Scissors
+								{
+										if (statusTarget == 4) //Spock
+												return true;
+										if (statusTarget == 0) //Rock
+												return true;
+								}
+								break;
+						case 2: //Lizard
+								{
+										if (statusTarget == 1) // Scissors
+												return true;
+										if (statusTarget == 0) //Rock
+												return true;
+								}
+								break;
+						case 3: //Paper
+								{
+										if (statusTarget == 2) //Lizard
+												return true;
+										if (statusTarget == 1) //Scissors
+												return true;
+								}
+								break;
+						case 4: //Spock
+								{
+										if (statusTarget == 2) // Lizzard
+												return true;
+										if (statusTarget == 3) // Paper
+												return true;
+								}
+								break;
+						}
+				}
+
+				return false;
+		}
+		
 		public void Reset ()
 		{				
 				Spawn (player1);
@@ -71,8 +109,8 @@ public class GameDirector : MonoBehaviour
 		}
 		private void Spawn (GameObject obj)
 		{
-				Spawn spawn = obj.GetComponent<Spawn> ();
-				spawn.Respawn ();
+				//Spawn spawn = obj.GetComponent<Spawn> ();
+				//spawn.Respawn ();
 		}
 		public void setStarted (bool st)
 		{
