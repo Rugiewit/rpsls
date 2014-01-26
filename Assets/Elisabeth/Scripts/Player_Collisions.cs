@@ -18,6 +18,8 @@ public class Player_Collisions : MonoBehaviour
 
 		public GameObject other_player;
 
+		public GameObject[] hands; 
+
 		// Use this for initialization
 		void Start ()
 		{
@@ -48,26 +50,20 @@ public class Player_Collisions : MonoBehaviour
 								//GameObject p2 = GameObject.Find ("Player2");
 								//Player2_Collisions p2_script = p2.GetComponent<Player2_Collisions>();
 								Player_Collisions p2_script = other_player.GetComponent<Player_Collisions> ();
-								string name = "hand_spock";
 								if (p2_script.status == 0) {//Rock
 										this.status = 4;//Spock
-										name = "hand_spock";
 								}
 								if (p2_script.status == 1) { //Scissors
 										this.status = 4;
-										name = "hand_spock";
 								}
 								if (p2_script.status == 2) { //Lizard
 										this.status = 0; //Rock
-										name = "hand_rock";
 								}
 								if (p2_script.status == 3) {//Paper
 										this.status = 2;
-										name = "hand_lizard";
 								}
 								if (p2_script.status == 4) { //Spock
 										this.status = 2;
-										name = "hand_lizard";
 								}
 
 								//this.transform.position = Vector3.zero;
@@ -78,7 +74,7 @@ public class Player_Collisions : MonoBehaviour
 								gd.ChangePlayerStatus (this.gameObject.name, status);
 
 								
-								GameObject new_obj = GameObject.Instantiate (Resources.Load (name)) as GameObject;
+				GameObject new_obj = GameObject.Instantiate (hands[this.status]) as GameObject;
 
 								new_obj.name = "Hand";
 				
@@ -142,26 +138,20 @@ public class Player_Collisions : MonoBehaviour
 				
 								int s = 0;
 
-								string name = "hand_rock";
 								if ((r >= 0.0f) && (r < (1.0f / 5.0f))) {
-										name = "hand_rock";
 										s = 0;
 								}
 								if ((r >= (1.0f / 5.0f)) && (r < (2.0f / 5.0f))) {
-										name = "hand_scissors";
 										s = 1;
 								}
 								if ((r >= (2.0f / 5.0f)) && (r < (3.0f / 5.0f))) {
-										name = "hand_lizard";
 										s = 2;
 								}
 								if ((r >= (3.0f / 5.0f)) && (r < (4.0f / 5.0f))) {
-										name = "hand_paper";
 										s = 3;
 								}
 				
 								if (r >= (5.0f / 6.0f)) {
-										name = "hand_spock";
 										s = 4;
 								}
 
@@ -172,7 +162,7 @@ public class Player_Collisions : MonoBehaviour
 								GameDirector gd = god.GetComponent<GameDirector> ();
 								gd.ChangePlayerStatus (this.gameObject.name, status);
 
-								GameObject new_obj = GameObject.Instantiate (Resources.Load (name)) as GameObject;
+								GameObject new_obj = GameObject.Instantiate (hands[this.status]) as GameObject;
 								
 								new_obj.name = "Hand";
 				
