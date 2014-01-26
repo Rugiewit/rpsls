@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class GUIChangeling : MonoBehaviour
@@ -63,6 +63,7 @@ public class GUIChangeling : MonoBehaviour
 				}			
 			
 				//current.transform.parent = changed.transform.parent;
+
 				current.transform.parent = this.gameObject.transform;
 
 				current.transform.localScale = new Vector3 (scale, scale, scale);

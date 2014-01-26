@@ -78,7 +78,8 @@ public class Player_Collisions : MonoBehaviour
 								gd.ChangePlayerStatus (this.gameObject.name, status);
 
 								
-								GameObject new_obj = GameObject.Find ((name + "(Clone)"));
+								GameObject new_obj = GameObject.Instantiate (Resources.Load (name)) as GameObject;
+
 								new_obj.name = "Hand";
 				
 								GameObject player_mesh = this.gameObject.transform.FindChild ("Hand").gameObject;
@@ -206,8 +207,13 @@ public class Player_Collisions : MonoBehaviour
 
 
 								this.status = s;
-								GameObject.Instantiate (Resources.Load (name));
-								GameObject new_obj = GameObject.Find ((name + "(Clone)"));
+								//propagate change to the director for player 1
+								GameObject god = GameObject.Find ("GameDirector");	
+								GameDirector gd = god.GetComponent<GameDirector> ();
+								gd.ChangePlayerStatus (this.gameObject.name, status);
+
+								GameObject new_obj = GameObject.Instantiate (Resources.Load (name)) as GameObject;
+								
 								new_obj.name = "Hand";
 				
 								GameObject player_mesh = this.gameObject.transform.FindChild ("Hand").gameObject;
