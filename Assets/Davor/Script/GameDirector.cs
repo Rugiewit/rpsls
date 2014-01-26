@@ -37,7 +37,9 @@ public class GameDirector : MonoBehaviour
 				//check who is winning set into power
 				int p1s = player1.GetComponent<Player_Collisions> ().status;	
 				int p2s = player2.GetComponent<Player_Collisions> ().status;
-				SetThePower (1, checkIsStatusLosing (p1s, p2s));
+				if (p1s != p2s) {
+						SetThePower (2, checkIsStatusLosing (p1s, p2s));
+				}
 		}
 		public void SetThePower (int player, bool power)
 		{
