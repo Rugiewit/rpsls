@@ -19,11 +19,14 @@ public class Player_Collisions : MonoBehaviour
 		public GameObject other_player;
 
 		public GameObject[] hands; 
-
+		public AudioSource fly_sound;
 		// Use this for initialization
 		void Start ()
 		{
 				status = 3;
+
+				GameObject camera = GameObject.Find ("Main Camera");
+				fly_sound = camera.GetComponent<Audio_Script>().source4;
 				
 				//GameObject new_obj = GameObject.Instantiate (Resources.Load ("Pill")) as GameObject;
 				//	new_obj.name = "Pill";
@@ -36,7 +39,7 @@ public class Player_Collisions : MonoBehaviour
 		// Update is called once per frame
 		void Update ()
 		{
-
+			
 
 				if (fly_away) {
 
@@ -74,7 +77,7 @@ public class Player_Collisions : MonoBehaviour
 								gd.ChangePlayerStatus (this.gameObject.name, status);
 
 								
-				GameObject new_obj = GameObject.Instantiate (hands[this.status]) as GameObject;
+								GameObject new_obj = GameObject.Instantiate (hands[this.status]) as GameObject;
 
 								new_obj.name = "Hand";
 				
@@ -84,6 +87,8 @@ public class Player_Collisions : MonoBehaviour
 								new_obj.transform.localScale = new Vector3 (0.25f, 0.25f, 0.25f);
 								new_obj.transform.localEulerAngles = new Vector3 (-90, 0, 0);
 								new_obj.transform.localPosition = Vector3.zero;
+								
+								
 
 						}
 				}
@@ -101,6 +106,8 @@ public class Player_Collisions : MonoBehaviour
 						fly_away = GameDirector.checkIsStatusLosing (this.status, g.status);
 						if (g.status != this.status) {
 								fly_away = GameDirector.checkIsStatusLosing (this.status, g.status);
+
+								fly_sound.Play ();
 								
 								if (fly_away) {
 										Debug.Log ("Away");
@@ -172,6 +179,7 @@ public class Player_Collisions : MonoBehaviour
 								new_obj.transform.localScale = new Vector3 (0.25f, 0.25f, 0.25f);
 								new_obj.transform.localEulerAngles = new Vector3 (-90, 0, 0);
 								new_obj.transform.localPosition = Vector3.zero;
+								
 
 								Destroy (obj);
 				
