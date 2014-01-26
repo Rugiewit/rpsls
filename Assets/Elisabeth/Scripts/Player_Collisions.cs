@@ -20,9 +20,13 @@ public class Player_Collisions : MonoBehaviour
 
 		public GameObject[] hands; 
 		public AudioSource fly_sound;
+<<<<<<< HEAD
 
 		public Material mat;
 
+=======
+		public AudioSource collect_sound;
+>>>>>>> f7a9b09429b3e7b9b157441fa072413fccf0ddc1
 		// Use this for initialization
 		void Start ()
 		{
@@ -30,6 +34,9 @@ public class Player_Collisions : MonoBehaviour
 
 				GameObject camera = GameObject.Find ("Main Camera");
 				fly_sound = camera.GetComponent<Audio_Script>().source4;
+
+
+				collect_sound = camera.GetComponent<Audio_Script>().source5;
 				
 				//GameObject new_obj = GameObject.Instantiate (Resources.Load ("Pill")) as GameObject;
 				//	new_obj.name = "Pill";
@@ -138,7 +145,7 @@ public class Player_Collisions : MonoBehaviour
 						GameObject obj = col.gameObject;
 						Pill_FlyPath path_script = obj.GetComponent<Pill_FlyPath> ();
 						if (this.gameObject == path_script.target) {
-				
+								
 	
 								//Vector3 pos = obj.transform.FindChild("Hand").position;
 								//Vector3 pos = this.gameObject.transform.FindChild ("Hand").position;
@@ -190,6 +197,7 @@ public class Player_Collisions : MonoBehaviour
 				
 			
 						} else {
+								collect_sound.Play ();
 								Pill_FlyPath fly_path = col.gameObject.GetComponent<Pill_FlyPath> ();
 				
 								//GameObject p2 = GameObject.Find ("Player2");
