@@ -20,13 +20,27 @@ public class Player_Collisions : MonoBehaviour
 
 		public GameObject[] hands; 
 		public AudioSource fly_sound;
+<<<<<<< HEAD
+
+		public Material mat;
+
+=======
+		public AudioSource collect_sound;
+>>>>>>> f7a9b09429b3e7b9b157441fa072413fccf0ddc1
 		// Use this for initialization
 		void Start ()
 		{
 				status = 3;
 
 				GameObject camera = GameObject.Find ("Main Camera");
+<<<<<<< HEAD
 				fly_sound = camera.GetComponent<Audio_Script> ().source4;
+=======
+				fly_sound = camera.GetComponent<Audio_Script>().source4;
+
+
+				collect_sound = camera.GetComponent<Audio_Script>().source5;
+>>>>>>> 60fc79d56078a94e59ac3096b7a084d0f07e033a
 				
 				//GameObject new_obj = GameObject.Instantiate (Resources.Load ("Pill")) as GameObject;
 				//	new_obj.name = "Pill";
@@ -87,7 +101,7 @@ public class Player_Collisions : MonoBehaviour
 								new_obj.transform.localScale = new Vector3 (0.25f, 0.25f, 0.25f);
 								new_obj.transform.localEulerAngles = new Vector3 (-90, 0, 0);
 								new_obj.transform.localPosition = Vector3.zero;
-								
+								SetTexture(new_obj);
 								
 
 						}
@@ -141,7 +155,7 @@ public class Player_Collisions : MonoBehaviour
 						GameObject obj = col.gameObject;
 						Pill_FlyPath path_script = obj.GetComponent<Pill_FlyPath> ();
 						if (this.gameObject == path_script.target) {
-				
+								
 	
 								//Vector3 pos = obj.transform.FindChild("Hand").position;
 								//Vector3 pos = this.gameObject.transform.FindChild ("Hand").position;
@@ -186,11 +200,14 @@ public class Player_Collisions : MonoBehaviour
 								new_obj.transform.localEulerAngles = new Vector3 (-90, 0, 0);
 								new_obj.transform.localPosition = Vector3.zero;
 								
+								SetTexture(new_obj);
+
 
 								Destroy (obj);
 				
 			
 						} else {
+								collect_sound.Play ();
 								Pill_FlyPath fly_path = col.gameObject.GetComponent<Pill_FlyPath> ();
 				
 								//GameObject p2 = GameObject.Find ("Player2");
@@ -218,5 +235,13 @@ public class Player_Collisions : MonoBehaviour
 				}
 		}
 
+
+	public void SetTexture(GameObject new_obj)
+	{
+		foreach (SkinnedMeshRenderer smr in new_obj.GetComponentsInChildren<SkinnedMeshRenderer>())
+		{
+			smr.material = mat; 
+		}	
+	}
 
 }
