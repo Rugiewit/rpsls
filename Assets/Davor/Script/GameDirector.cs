@@ -16,6 +16,11 @@ public class GameDirector : MonoBehaviour
 		public GameObject pill;
 
 		private bool isStarted = false;
+
+		public GameObject pillPrefab;
+
+		public float spawnPillTimer = 5;
+		private float timeSinceLastPill = 0f;
 		
 		// Use this for initialization
 		void Start ()
@@ -26,6 +31,12 @@ public class GameDirector : MonoBehaviour
 		// Update is called once per frame
 		void Update ()
 		{	
+			timeSinceLastPill += Time.deltaTime;
+			if(timeSinceLastPill > spawnPillTimer)
+			{
+				SpawnPill();
+				timeSinceLastPill = 0;
+			}
 		}
 		public void ChangePlayerStatus (string playerName, int status)
 		{
@@ -121,5 +132,12 @@ public class GameDirector : MonoBehaviour
 		public bool IsStarted ()
 		{
 				return isStarted;
+		}
+
+		public void SpawnPill()
+		{
+			Vector3 spawnPos = Random.onUnitSphere * 0.5f;
+			GameObject new_obj = GameObject.Instantiate (pillPrefab,spawnPos,pillPrefab.transform.rotation) as GameObject;
+			new_obj.name = "Pill";
 		}
 }
