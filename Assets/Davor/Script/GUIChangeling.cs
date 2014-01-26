@@ -78,6 +78,8 @@ public class GUIChangeling : MonoBehaviour
 						Debug.Log ("changed is NULL");
 				}
 				currentState = state;
+				
+				PaintThePower ();	
 
 		}
 		public void SetThePower (bool power)
