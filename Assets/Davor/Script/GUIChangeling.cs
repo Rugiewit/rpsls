@@ -4,6 +4,7 @@ using System.Collections;
 public class GUIChangeling : MonoBehaviour
 {
 		public float scale = 0.2f;
+
 		private string birdy = "hand_Fyou";
 		private string rock = "hand_rock";
 		private string paper = "hand_paper";
@@ -63,7 +64,7 @@ public class GUIChangeling : MonoBehaviour
 				}			
 			
 				//current.transform.parent = changed.transform.parent;
-
+				
 				current.transform.parent = this.gameObject.transform;
 
 				current.transform.localScale = new Vector3 (scale, scale, scale);
@@ -88,7 +89,19 @@ public class GUIChangeling : MonoBehaviour
 		private void PaintThePower ()
 		{
 				if (current != null) {
-						//current.renderer.material.color = gotThePower ? new Color (0.9f, 0.1f, 0.7f) : new Color (0.1f, 0.9f, 0.7f); //C#
+						Color c = Color.black;
+						if (gotThePower) {
+								c = Color.red;
+					
+						} else {
+								c = Color.blue;
+								//current.gameObject.GetComponentInChildren<Renderer> (Renderer).material.color = Color.green;
+								//current.renderer.material = weaker_mat;
+						}//current.renderer.material.color = gotThePower ? new Color (0.9f, 0.1f, 0.7f) : new Color (0.1f, 0.9f, 0.7f); //C#
+						Renderer[] renList = current.gameObject.GetComponentsInChildren<Renderer> ();
+						foreach (Renderer r in renList) {
+								r.material.color = c;
+						}		
 				}
 		}
 		public void Reset ()

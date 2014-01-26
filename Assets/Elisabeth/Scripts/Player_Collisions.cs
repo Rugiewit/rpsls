@@ -102,50 +102,10 @@ public class Player_Collisions : MonoBehaviour
 				if (col.gameObject.name == other_player.name) {
 						//Debug.Log ("Fly Away");
 						Player_Collisions g = col.gameObject.GetComponent<Player_Collisions> ();
+						fly_away = GameDirector.checkIsStatusLosing (this.status, g.status);
 						if (g.status != this.status) {
-								switch (this.status) {
-								case 0: //Rock
-										{
-												if (g.status == 3)//Paper
-														fly_away = true;
-												if (g.status == 4)//Spock
-														fly_away = true;
-										}
-										break;
-								case 1: //Scissors
-										{
-												if (g.status == 4) //Spock
-														fly_away = true;
-												if (g.status == 0) //Rock
-														fly_away = true;
-										}
-										break;
-								case 2: //Lizard
-										{
-												if (g.status == 1) // Scissors
-														fly_away = true;
-												if (g.status == 0) //Rock
-														fly_away = true;
-										}
-										break;
-								case 3: //Paper
-										{
-												if (g.status == 2) //Lizard
-														fly_away = true;
-												if (g.status == 1) //Scissors
-														fly_away = true;
-										}
-										break;
-								case 4: //Spock
-										{
-												if (g.status == 2) // Lizzard
-														fly_away = true;
-												if (g.status == 3) // Paper
-														fly_away = true;
-										}
-										break;
-								}
-
+								fly_away = GameDirector.checkIsStatusLosing (this.status, g.status);
+								
 								if (fly_away) {
 										Debug.Log ("Away");
 										//Collider current_collider = col.gameObject.GetComponent<Collider>();
